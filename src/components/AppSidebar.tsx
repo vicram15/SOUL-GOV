@@ -107,12 +107,16 @@ export function AppSidebar() {
         {/* Header */}
         <div className="p-4 border-b">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center">
-              <Heart className="w-4 h-4 text-primary-foreground" />
+            <div className="w-8 h-8 from-primary to-primary-glow rounded-lg flex items-center justify-center">
+            <img
+  src="/LOGO.png"
+  alt="SOUL Logo"
+  className="h-25 w-20 object-contain"
+/>
             </div>
             {!collapsed && (
               <div>
-                <h2 className="font-semibold text-foreground">Impact Hub</h2>
+                <h2 className="font-semibold text-foreground">Child Impact Hub</h2>
                 <p className="text-xs text-muted-foreground">Child Welfare Platform</p>
               </div>
             )}

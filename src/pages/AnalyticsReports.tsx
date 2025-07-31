@@ -233,38 +233,38 @@ export default function AnalyticsReports() {
             {/* Quick Actions */}
             <div className="space-y-4">
               <h3 className="font-semibold">Quick Actions</h3>
-              <div className="space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
                 <Button 
-                  className="w-full justify-start" 
+                  className="w-full justify-start h-12 sm:h-14" 
                   variant="outline"
                   onClick={handleGenerateReport}
                 >
-                  <TrendingUp className="w-4 h-4 mr-2" />
-                  <span className="truncate">Generate Report</span>
+                  <TrendingUp className="w-4 h-4 mr-2 flex-shrink-0" />
+                  <span className="truncate text-sm sm:text-base">Generate Report</span>
                 </Button>
                 <Button 
-                  className="w-full justify-start" 
+                  className="w-full justify-start h-12 sm:h-14" 
                   variant="outline"
                   onClick={() => handleDownloadPDF('custom')}
                 >
-                  <Download className="w-4 h-4 mr-2" />
-                  <span className="truncate">Download as PDF</span>
+                  <Download className="w-4 h-4 mr-2 flex-shrink-0" />
+                  <span className="truncate text-sm sm:text-base">Download as PDF</span>
                 </Button>
                 <Button 
-                  className="w-full justify-start" 
+                  className="w-full justify-start h-12 sm:h-14" 
                   variant="outline"
                   onClick={handleExportExcel}
                 >
-                  <FileText className="w-4 h-4 mr-2" />
-                  <span className="truncate">Export to Excel</span>
+                  <FileText className="w-4 h-4 mr-2 flex-shrink-0" />
+                  <span className="truncate text-sm sm:text-base">Export to Excel</span>
                 </Button>
                 <Button 
-                  className="w-full justify-start" 
+                  className="w-full justify-start h-12 sm:h-14" 
                   variant="outline"
                   onClick={handleShareView}
                 >
-                  <Share className="w-4 h-4 mr-2" />
-                  <span className="truncate">Share View Link</span>
+                  <Share className="w-4 h-4 mr-2 flex-shrink-0" />
+                  <span className="truncate text-sm sm:text-base">Share View Link</span>
                 </Button>
               </div>
             </div>

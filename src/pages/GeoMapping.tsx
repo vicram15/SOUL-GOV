@@ -219,26 +219,26 @@ export default function GeoMapping() {
             <CardTitle>Quick Actions</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              <Button className="w-full justify-start" variant="outline">
-                <ZoomIn className="w-4 h-4 mr-2" />
-                Zoom to Specific Region
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+              <Button className="w-full justify-start h-12 sm:h-14" variant="outline">
+                <ZoomIn className="w-4 h-4 mr-2 flex-shrink-0" />
+                <span className="truncate text-sm sm:text-base">Zoom to Specific Region</span>
               </Button>
-              <Button className="w-full justify-start" variant="outline">
-                <Download className="w-4 h-4 mr-2" />
-                Export Current Map View
+              <Button className="w-full justify-start h-12 sm:h-14" variant="outline">
+                <Download className="w-4 h-4 mr-2 flex-shrink-0" />
+                <span className="truncate text-sm sm:text-base">Export Current Map View</span>
               </Button>
-              <Button className="w-full justify-start" variant="outline">
-                <Filter className="w-4 h-4 mr-2" />
-                Advanced Filtering Options
+              <Button className="w-full justify-start h-12 sm:h-14" variant="outline">
+                <Filter className="w-4 h-4 mr-2 flex-shrink-0" />
+                <span className="truncate text-sm sm:text-base">Advanced Filtering Options</span>
               </Button>
-              <Button className="w-full justify-start" variant="outline">
-                <Layers className="w-4 h-4 mr-2" />
-                Toggle Map Layers
+              <Button className="w-full justify-start h-12 sm:h-14" variant="outline">
+                <Layers className="w-4 h-4 mr-2 flex-shrink-0" />
+                <span className="truncate text-sm sm:text-base">Toggle Map Layers</span>
               </Button>
-              <Button className="w-full justify-start" variant="outline">
-                <School className="w-4 h-4 mr-2" />
-                Show Nearby Schools
+              <Button className="w-full justify-start h-12 sm:h-14" variant="outline">
+                <School className="w-4 h-4 mr-2 flex-shrink-0" />
+                <span className="truncate text-sm sm:text-base">Show Nearby Schools</span>
               </Button>
             </div>
           </CardContent>

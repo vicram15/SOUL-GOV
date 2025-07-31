@@ -28,8 +28,8 @@ export function Layout({ children }: LayoutProps) {
               <div className="flex items-center gap-4">
                 <SidebarTrigger className="hover:bg-muted" />
                 <div className="hidden sm:block">
-                  <h1 className="font-semibold text-foreground">Child Impact Hub</h1>
-                  <p className="text-sm text-muted-foreground">Administrative Dashboard</p>
+                  <h1 className="font-semibold text-foreground">SOUL CIH ADMIN DASHBOARD</h1>
+                  <p className="text-sm text-muted-foreground"> Supporting Outreach for Uplifting Lives</p>
                 </div>
               </div>
 
@@ -37,8 +37,8 @@ export function Layout({ children }: LayoutProps) {
                 {/* Notifications */}
                 <Button variant="ghost" size="icon" className="relative">
                   <Bell className="w-5 h-5" />
-                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-destructive rounded-full text-xs flex items-center justify-center text-destructive-foreground">
-                    3
+                  <span className="absolute -top-0 -right-1 w-3 h-3 bg-destructive rounded-full text-xs flex items-center justify-center text-destructive-foreground">
+                    
                   </span>
                 </Button>
 
@@ -53,7 +53,7 @@ export function Layout({ children }: LayoutProps) {
                       </Avatar>
                       <div className="hidden sm:block text-left">
                         <div className="text-sm font-medium">Admin Officer</div>
-                        <div className="text-xs text-muted-foreground">admin@impacthub.gov</div>
+                        <div className="text-xs text-muted-foreground">admin@SOUL.gov</div>
                       </div>
                     </Button>
                   </DropdownMenuTrigger>

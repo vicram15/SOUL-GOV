@@ -5,6 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { 
   Baby, 
   CheckCircle, 
@@ -15,9 +19,16 @@ import {
   Eye,
   School,
   MapPin,
-  PieChart
+  PieChart,
+  Calendar,
+  FileText,
+  UserCheck,
+  AlertCircle,
+  Save,
+  X
 } from "lucide-react";
 import { PieChart as RechartsPieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
+import { useState } from "react";
 
 // Sample data
 const children = [
@@ -70,6 +81,12 @@ const verificationStatusData = [
 ];
 
 export default function ChildData() {
+  const [verifyModalOpen, setVerifyModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [timelineModalOpen, setTimelineModalOpen] = useState(false);
+  const [assignSchoolModalOpen, setAssignSchoolModalOpen] = useState(false);
+  const [selectedChild, setSelectedChild] = useState<any>(null);
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'verified':
@@ -82,6 +99,26 @@ export default function ChildData() {
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
+  };
+
+  const handleVerifyEntry = () => {
+    setSelectedChild(children[0]); // For demo, using first child
+    setVerifyModalOpen(true);
+  };
+
+  const handleEditDetails = () => {
+    setSelectedChild(children[0]); // For demo, using first child
+    setEditModalOpen(true);
+  };
+
+  const handleViewTimeline = () => {
+    setSelectedChild(children[0]); // For demo, using first child
+    setTimelineModalOpen(true);
+  };
+
+  const handleAssignSchool = () => {
+    setSelectedChild(children[0]); // For demo, using first child
+    setAssignSchoolModalOpen(true);
   };
 
   return (
@@ -404,26 +441,394 @@ export default function ChildData() {
           <CardTitle>Quick Actions</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Button variant="outline" className="h-16 flex-col gap-2">
-              <CheckCircle className="w-5 h-5" />
-              <span className="text-sm">Verify Entry</span>
+          <div className="grid grid-cols-2 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 xs:gap-3 sm:gap-4">
+            <Button 
+              variant="outline" 
+              className="h-14 xs:h-16 sm:h-20 flex-col gap-1 xs:gap-2 p-2 min-h-[56px] xs:min-h-[64px] sm:min-h-[80px] transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+              aria-label="Verify child entry"
+              onClick={handleVerifyEntry}
+            >
+              <CheckCircle className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 flex-shrink-0 text-success" />
+              <span className="text-xs xs:text-sm text-center font-medium leading-tight px-1">Verify Entry</span>
             </Button>
-            <Button variant="outline" className="h-16 flex-col gap-2">
-              <Edit className="w-5 h-5" />
-              <span className="text-sm">Edit Details</span>
+            <Button 
+              variant="outline" 
+              className="h-14 xs:h-16 sm:h-20 flex-col gap-1 xs:gap-2 p-2 min-h-[56px] xs:min-h-[64px] sm:min-h-[80px] transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+              aria-label="Edit child details"
+              onClick={handleEditDetails}
+            >
+              <Edit className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 flex-shrink-0 text-primary" />
+              <span className="text-xs xs:text-sm text-center font-medium leading-tight px-1">Edit Details</span>
             </Button>
-            <Button variant="outline" className="h-16 flex-col gap-2">
-              <Eye className="w-5 h-5" />
-              <span className="text-sm">View Timeline</span>
+            <Button 
+              variant="outline" 
+              className="h-14 xs:h-16 sm:h-20 flex-col gap-1 xs:gap-2 p-2 min-h-[56px] xs:min-h-[64px] sm:min-h-[80px] transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+              aria-label="View child timeline"
+              onClick={handleViewTimeline}
+            >
+              <Eye className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 flex-shrink-0 text-volunteer" />
+              <span className="text-xs xs:text-sm text-center font-medium leading-tight px-1">View Timeline</span>
             </Button>
-            <Button variant="outline" className="h-16 flex-col gap-2">
-              <School className="w-5 h-5" />
-              <span className="text-sm">Assign School</span>
+            <Button 
+              variant="outline" 
+              className="h-14 xs:h-16 sm:h-20 flex-col gap-1 xs:gap-2 p-2 min-h-[56px] xs:min-h-[64px] sm:min-h-[80px] transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+              aria-label="Assign child to school"
+              onClick={handleAssignSchool}
+            >
+              <School className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 flex-shrink-0 text-child-care" />
+              <span className="text-xs xs:text-sm text-center font-medium leading-tight px-1">Assign School</span>
             </Button>
           </div>
         </CardContent>
       </Card>
+
+      {/* Verify Entry Modal */}
+      <Dialog open={verifyModalOpen} onOpenChange={setVerifyModalOpen}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <UserCheck className="w-5 h-5 text-success" />
+              Verify Child Entry
+            </DialogTitle>
+            <DialogDescription>
+              Review and verify the child's information and documents.
+            </DialogDescription>
+          </DialogHeader>
+          
+          {selectedChild && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-sm font-medium">Child Name</Label>
+                  <p className="text-sm text-muted-foreground">{selectedChild.name}</p>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium">Child ID</Label>
+                  <p className="text-sm text-muted-foreground">{selectedChild.id}</p>
+                </div>
+              </div>
+              
+              <div className="space-y-3">
+                <Label className="text-sm font-medium">Verification Checklist</Label>
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="aadhaar" />
+                    <Label htmlFor="aadhaar" className="text-sm">Aadhaar Card Verified</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="birth-cert" />
+                    <Label htmlFor="birth-cert" className="text-sm">Birth Certificate Available</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="photo" />
+                    <Label htmlFor="photo" className="text-sm">Recent Photo Uploaded</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="address" />
+                    <Label htmlFor="address" className="text-sm">Address Verification Complete</Label>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <Label htmlFor="notes" className="text-sm font-medium">Verification Notes</Label>
+                <Textarea 
+                  id="notes" 
+                  placeholder="Add any verification notes or observations..."
+                  className="mt-1"
+                />
+              </div>
+            </div>
+          )}
+          
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setVerifyModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button className="bg-success hover:bg-success/90">
+              <CheckCircle className="w-4 h-4 mr-2" />
+              Mark as Verified
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Details Modal */}
+      <Dialog open={editModalOpen} onOpenChange={setEditModalOpen}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Edit className="w-5 h-5 text-primary" />
+              Edit Child Details
+            </DialogTitle>
+            <DialogDescription>
+              Update the child's personal information and details.
+            </DialogDescription>
+          </DialogHeader>
+          
+          {selectedChild && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="name" className="text-sm font-medium">Full Name</Label>
+                  <Input id="name" defaultValue={selectedChild.name} className="mt-1" />
+                </div>
+                <div>
+                  <Label htmlFor="age" className="text-sm font-medium">Age</Label>
+                  <Input id="age" type="number" defaultValue={selectedChild.age} className="mt-1" />
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="gender" className="text-sm font-medium">Gender</Label>
+                  <Select defaultValue={selectedChild.gender.toLowerCase()}>
+                    <SelectTrigger className="mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="male">Male</SelectItem>
+                      <SelectItem value="female">Female</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="state" className="text-sm font-medium">State</Label>
+                  <Select defaultValue={selectedChild.state.toLowerCase().replace(' ', '-')}>
+                    <SelectTrigger className="mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="uttar-pradesh">Uttar Pradesh</SelectItem>
+                      <SelectItem value="maharashtra">Maharashtra</SelectItem>
+                      <SelectItem value="bihar">Bihar</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              
+              <div>
+                <Label htmlFor="district" className="text-sm font-medium">District</Label>
+                <Input id="district" defaultValue={selectedChild.district} className="mt-1" />
+              </div>
+              
+              <div>
+                <Label htmlFor="notes" className="text-sm font-medium">Additional Notes</Label>
+                <Textarea 
+                  id="notes" 
+                  placeholder="Add any additional notes or special requirements..."
+                  className="mt-1"
+                />
+              </div>
+            </div>
+          )}
+          
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEditModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button>
+              <Save className="w-4 h-4 mr-2" />
+              Save Changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* View Timeline Modal */}
+      <Dialog open={timelineModalOpen} onOpenChange={setTimelineModalOpen}>
+        <DialogContent className="sm:max-w-[700px] max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Eye className="w-5 h-5 text-volunteer" />
+              Child Timeline
+            </DialogTitle>
+            <DialogDescription>
+              View the complete timeline of events and activities for this child.
+            </DialogDescription>
+          </DialogHeader>
+          
+          {selectedChild && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
+                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Baby className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold">{selectedChild.name}</h3>
+                  <p className="text-sm text-muted-foreground">{selectedChild.id}</p>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="relative">
+                  <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                  
+                  <div className="space-y-4">
+                    <div className="flex gap-4">
+                      <div className="w-8 h-8 bg-success/10 rounded-full flex items-center justify-center flex-shrink-0">
+                        <CheckCircle className="w-4 h-4 text-success" />
+                      </div>
+                      <div className="flex-1 pb-4">
+                        <h4 className="font-medium">Child Registered</h4>
+                        <p className="text-sm text-muted-foreground">Child profile created in the system</p>
+                        <p className="text-xs text-muted-foreground mt-1">March 15, 2024 - 10:30 AM</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-4">
+                      <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                        <FileText className="w-4 h-4 text-primary" />
+                      </div>
+                      <div className="flex-1 pb-4">
+                        <h4 className="font-medium">Documents Uploaded</h4>
+                        <p className="text-sm text-muted-foreground">Birth certificate and Aadhaar card uploaded</p>
+                        <p className="text-xs text-muted-foreground mt-1">March 16, 2024 - 2:15 PM</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-4">
+                      <div className="w-8 h-8 bg-volunteer/10 rounded-full flex items-center justify-center flex-shrink-0">
+                        <UserCheck className="w-4 h-4 text-volunteer" />
+                      </div>
+                      <div className="flex-1 pb-4">
+                        <h4 className="font-medium">Verification Initiated</h4>
+                        <p className="text-sm text-muted-foreground">Documents sent for verification</p>
+                        <p className="text-xs text-muted-foreground mt-1">March 17, 2024 - 9:00 AM</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-4">
+                      <div className="w-8 h-8 bg-child-care/10 rounded-full flex items-center justify-center flex-shrink-0">
+                        <School className="w-4 h-4 text-child-care" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-medium">School Assignment Pending</h4>
+                        <p className="text-sm text-muted-foreground">Awaiting school assignment</p>
+                        <p className="text-xs text-muted-foreground mt-1">Current Status</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setTimelineModalOpen(false)}>
+              Close
+            </Button>
+            <Button variant="outline">
+              <FileText className="w-4 h-4 mr-2" />
+              Export Timeline
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Assign School Modal */}
+      <Dialog open={assignSchoolModalOpen} onOpenChange={setAssignSchoolModalOpen}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <School className="w-5 h-5 text-child-care" />
+              Assign School
+            </DialogTitle>
+            <DialogDescription>
+              Select a school for the child and complete the enrollment process.
+            </DialogDescription>
+          </DialogHeader>
+          
+          {selectedChild && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
+                <div className="w-10 h-10 bg-child-care/10 rounded-full flex items-center justify-center">
+                  <Baby className="w-5 h-5 text-child-care" />
+                </div>
+                <div>
+                  <h3 className="font-semibold">{selectedChild.name}</h3>
+                  <p className="text-sm text-muted-foreground">Age: {selectedChild.age} years | {selectedChild.district}</p>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="school" className="text-sm font-medium">Select School</Label>
+                  <Select>
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Choose a school" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="school-1">Government Primary School, Lucknow</SelectItem>
+                      <SelectItem value="school-2">St. Mary's Convent School</SelectItem>
+                      <SelectItem value="school-3">Delhi Public School</SelectItem>
+                      <SelectItem value="school-4">Kendriya Vidyalaya</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div>
+                  <Label htmlFor="grade" className="text-sm font-medium">Grade/Class</Label>
+                  <Select>
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Select grade" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">Class 1</SelectItem>
+                      <SelectItem value="2">Class 2</SelectItem>
+                      <SelectItem value="3">Class 3</SelectItem>
+                      <SelectItem value="4">Class 4</SelectItem>
+                      <SelectItem value="5">Class 5</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div>
+                  <Label htmlFor="enrollment-date" className="text-sm font-medium">Enrollment Date</Label>
+                  <Input id="enrollment-date" type="date" className="mt-1" />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Enrollment Requirements</Label>
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox id="uniform" />
+                      <Label htmlFor="uniform" className="text-sm">School Uniform Provided</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox id="books" />
+                      <Label htmlFor="books" className="text-sm">Textbooks Supplied</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox id="transport" />
+                      <Label htmlFor="transport" className="text-sm">Transport Arranged</Label>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <Label htmlFor="notes" className="text-sm font-medium">Assignment Notes</Label>
+                  <Textarea 
+                    id="notes" 
+                    placeholder="Add any special requirements or notes for this assignment..."
+                    className="mt-1"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+          
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setAssignSchoolModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button className="bg-child-care hover:bg-child-care/90">
+              <School className="w-4 h-4 mr-2" />
+              Complete Assignment
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
