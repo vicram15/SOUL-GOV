@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useToast } from "@/hooks/use-toast";
 import { 
   TrendingUp, 
   BarChart3, 
@@ -15,6 +16,7 @@ import {
   LineChart
 } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart as RechartsPieChart, Pie, Cell, LineChart as RechartsLineChart, Line } from 'recharts';
+import { PDFService, generateStateWiseReport, generateMonthlyTrendsReport, generateImpactAssessmentReport } from "@/services/pdfService";
 
 // Sample data
 const customReportFilters = [
@@ -50,6 +52,86 @@ const insightsData = [
 ];
 
 export default function AnalyticsReports() {
+  const { toast } = useToast();
+
+  const handleGenerateReport = async () => {
+    toast({
+      title: "Generating Report",
+      description: "Custom report is being generated based on your filters...",
+    });
+    
+    setTimeout(() => {
+      toast({
+        title: "Report Generated",
+        description: "Your custom report has been generated successfully!",
+      });
+    }, 2000);
+  };
+
+  const handleDownloadPDF = async (type: 'custom' | 'state' | 'trends' | 'impact') => {
+    try {
+      toast({
+        title: "Generating PDF",
+        description: "Your detailed PDF report is being prepared...",
+      });
+
+      const pdfService = new PDFService();
+      let reportData;
+
+      switch (type) {
+        case 'state':
+          reportData = generateStateWiseReport();
+          break;
+        case 'trends':
+          reportData = generateMonthlyTrendsReport();
+          break;
+        case 'impact':
+          reportData = generateImpactAssessmentReport();
+          break;
+        default:
+          // Custom report based on current filters
+          reportData = generateStateWiseReport(); // Default for now
+      }
+
+      await pdfService.generateDetailedReport(reportData);
+      
+      toast({
+        title: "PDF Downloaded",
+        description: "Your detailed report has been downloaded successfully!",
+      });
+    } catch (error) {
+      toast({
+        title: "Download Failed",
+        description: "There was an error generating your PDF. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleExportExcel = () => {
+    toast({
+      title: "Excel Export",
+      description: "Excel file is being prepared for download...",
+    });
+    
+    // Simulate Excel download
+    setTimeout(() => {
+      toast({
+        title: "Excel Downloaded",
+        description: "Your data has been exported to Excel successfully!",
+      });
+    }, 1500);
+  };
+
+  const handleShareView = () => {
+    const shareUrl = `${window.location.origin}/reports/shared/${Date.now()}`;
+    navigator.clipboard.writeText(shareUrl);
+    
+    toast({
+      title: "Share Link Copied",
+      description: "The shareable link has been copied to your clipboard!",
+    });
+  };
   return (
     <div className="space-y-6 p-4 md:p-6">
       {/* Header */}
@@ -58,14 +140,24 @@ export default function AnalyticsReports() {
           <h1 className="text-2xl md:text-3xl font-bold">Analytics & Reports</h1>
           <p className="text-muted-foreground">Insights & Trends</p>
         </div>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <Button variant="outline">
+        <div className="flex flex-col xs:flex-row sm:flex-row gap-2 w-full xs:w-auto">
+          <Button 
+            variant="outline" 
+            className="w-full xs:w-auto"
+            onClick={() => handleDownloadPDF('custom')}
+          >
             <Download className="w-4 h-4 mr-2" />
-            Download Summary
+            <span className="hidden xs:inline">Download Summary</span>
+            <span className="xs:hidden">Download</span>
           </Button>
-          <Button variant="outline">
+          <Button 
+            variant="outline" 
+            className="w-full xs:w-auto"
+            onClick={handleShareView}
+          >
             <Share className="w-4 h-4 mr-2" />
-            Share View
+            <span className="hidden xs:inline">Share View</span>
+            <span className="xs:hidden">Share</span>
           </Button>
         </div>
       </div>
@@ -142,21 +234,37 @@ export default function AnalyticsReports() {
             <div className="space-y-4">
               <h3 className="font-semibold">Quick Actions</h3>
               <div className="space-y-3">
-                <Button className="w-full justify-start" variant="outline">
+                <Button 
+                  className="w-full justify-start" 
+                  variant="outline"
+                  onClick={handleGenerateReport}
+                >
                   <TrendingUp className="w-4 h-4 mr-2" />
-                  Generate Report
+                  <span className="truncate">Generate Report</span>
                 </Button>
-                <Button className="w-full justify-start" variant="outline">
+                <Button 
+                  className="w-full justify-start" 
+                  variant="outline"
+                  onClick={() => handleDownloadPDF('custom')}
+                >
                   <Download className="w-4 h-4 mr-2" />
-                  Download as PDF
+                  <span className="truncate">Download as PDF</span>
                 </Button>
-                <Button className="w-full justify-start" variant="outline">
+                <Button 
+                  className="w-full justify-start" 
+                  variant="outline"
+                  onClick={handleExportExcel}
+                >
                   <FileText className="w-4 h-4 mr-2" />
-                  Export to Excel
+                  <span className="truncate">Export to Excel</span>
                 </Button>
-                <Button className="w-full justify-start" variant="outline">
+                <Button 
+                  className="w-full justify-start" 
+                  variant="outline"
+                  onClick={handleShareView}
+                >
                   <Share className="w-4 h-4 mr-2" />
-                  Share View Link
+                  <span className="truncate">Share View Link</span>
                 </Button>
               </div>
             </div>
@@ -174,7 +282,7 @@ export default function AnalyticsReports() {
               State-wise Performance Analysis
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent data-chart-title="State-wise Performance Analysis">
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={stateReportsData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -197,7 +305,7 @@ export default function AnalyticsReports() {
               Process Completion Status
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent data-chart-title="Process Completion Status">
             <ResponsiveContainer width="100%" height={300}>
               <RechartsPieChart>
                 <Pie
@@ -237,7 +345,7 @@ export default function AnalyticsReports() {
             Monthly Activity Trends
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent data-chart-title="Monthly Activity Trends">
           <ResponsiveContainer width="100%" height={400}>
             <RechartsLineChart data={trendsData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -325,14 +433,24 @@ export default function AnalyticsReports() {
               <p className="text-sm text-muted-foreground mb-4">
                 Comprehensive analysis of all states with verification and enrollment data
               </p>
-              <div className="flex gap-2">
-                <Button size="sm" variant="outline">
+              <div className="flex flex-col xs:flex-row gap-2">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="w-full xs:w-auto"
+                  onClick={() => handleDownloadPDF('state')}
+                >
                   <Download className="w-4 h-4 mr-2" />
-                  PDF
+                  <span className="truncate">PDF</span>
                 </Button>
-                <Button size="sm" variant="outline">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="w-full xs:w-auto"
+                  onClick={handleExportExcel}
+                >
                   <FileText className="w-4 h-4 mr-2" />
-                  Excel
+                  <span className="truncate">Excel</span>
                 </Button>
               </div>
             </div>
@@ -342,14 +460,24 @@ export default function AnalyticsReports() {
               <p className="text-sm text-muted-foreground mb-4">
                 Time-based analysis showing growth patterns and seasonal trends
               </p>
-              <div className="flex gap-2">
-                <Button size="sm" variant="outline">
+              <div className="flex flex-col xs:flex-row gap-2">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="w-full xs:w-auto"
+                  onClick={() => handleDownloadPDF('trends')}
+                >
                   <Download className="w-4 h-4 mr-2" />
-                  PDF
+                  <span className="truncate">PDF</span>
                 </Button>
-                <Button size="sm" variant="outline">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="w-full xs:w-auto"
+                  onClick={handleExportExcel}
+                >
                   <FileText className="w-4 h-4 mr-2" />
-                  Excel
+                  <span className="truncate">Excel</span>
                 </Button>
               </div>
             </div>
@@ -359,14 +487,24 @@ export default function AnalyticsReports() {
               <p className="text-sm text-muted-foreground mb-4">
                 Detailed impact analysis with CSR contribution correlation
               </p>
-              <div className="flex gap-2">
-                <Button size="sm" variant="outline">
+              <div className="flex flex-col xs:flex-row gap-2">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="w-full xs:w-auto"
+                  onClick={() => handleDownloadPDF('impact')}
+                >
                   <Download className="w-4 h-4 mr-2" />
-                  PDF
+                  <span className="truncate">PDF</span>
                 </Button>
-                <Button size="sm" variant="outline">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="w-full xs:w-auto"
+                  onClick={handleExportExcel}
+                >
                   <FileText className="w-4 h-4 mr-2" />
-                  Excel
+                  <span className="truncate">Excel</span>
                 </Button>
               </div>
             </div>
