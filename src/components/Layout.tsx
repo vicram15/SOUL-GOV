@@ -2,6 +2,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import { Bell, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,9 +37,9 @@ export function Layout({ children }: LayoutProps) {
               <div className="flex items-center gap-3">
                 {/* Upload & Process Data Button */}
                 <Button variant="outline" size="sm" asChild>
-                  <a href="/data-processing">
+                  <Link to="/data-processing">
                     Upload & Process Data
-                  </a>
+                  </Link>
                 </Button>
 
                 {/* Notifications */}
