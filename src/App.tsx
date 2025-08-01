@@ -13,6 +13,7 @@ import SchoolDirectory from "./pages/SchoolDirectory";
 import IdentityManagement from "./pages/IdentityManagement";
 import CSRContributions from "./pages/CSRContributions";
 import AnalyticsReports from "./pages/AnalyticsReports";
+import DataProcessing from "./pages/DataProcessing";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/identity" element={<Layout><IdentityManagement /></Layout>} />
           <Route path="/csr" element={<Layout><CSRContributions /></Layout>} />
           <Route path="/reports" element={<Layout><AnalyticsReports /></Layout>} />
+          <Route path="/data-processing" element={<Layout><DataProcessing /></Layout>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

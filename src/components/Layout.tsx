@@ -34,6 +34,13 @@ export function Layout({ children }: LayoutProps) {
               </div>
 
               <div className="flex items-center gap-3">
+                {/* Upload & Process Data Button */}
+                <Button variant="outline" size="sm" asChild>
+                  <a href="/data-processing">
+                    Upload & Process Data
+                  </a>
+                </Button>
+
                 {/* Notifications */}
                 <Button variant="ghost" size="icon" className="relative">
                   <Bell className="w-5 h-5" />
