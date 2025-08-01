@@ -97,9 +97,10 @@ export function AppSidebar() {
   };
 
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
-    isActive 
-      ? "bg-primary/10 text-primary border-r-2 border-primary font-medium" 
+    isActive
+      ? "bg-primary/10 text-primary border-r-2 border-primary font-medium hover:bg-primary/20"
       : "text-muted-foreground hover:bg-muted hover:text-foreground";
+  
 
   return (
     <Sidebar className={collapsed ? "w-16" : "w-64"}>
@@ -107,12 +108,12 @@ export function AppSidebar() {
         {/* Header */}
         <div className="p-4 border-b">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 from-primary to-primary-glow rounded-lg flex items-center justify-center">
-            <img
-  src="/LOGO.png"
-  alt="SOUL Logo"
-  className="h-25 w-20 object-contain"
-/>
+            <div className="w-10 h-8 from-primary to-primary-glow rounded-lg flex items-center justify-center">
+              <img
+                src="/LOGO.png"
+                alt="SOUL Logo"
+                className="h-25 w-20 object-contain"
+              />
             </div>
             {!collapsed && (
               <div>
@@ -129,7 +130,7 @@ export function AppSidebar() {
             Main Modules
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="flex flex-col gap-y-5">
               {navigationItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild className="group">
@@ -157,7 +158,7 @@ export function AppSidebar() {
             Administration
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="flex flex-col gap-y-2">
               {adminItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild className="group">
