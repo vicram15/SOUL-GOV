@@ -86,6 +86,11 @@ const App = () => (
                 <Layout><RoleManagement /></Layout>
               </ProtectedRoute>
             } />
+            <Route path="/admin/access" element={
+              <ProtectedRoute requiredRoles={['super_admin']}>
+                <Layout><RoleManagement /></Layout>
+              </ProtectedRoute>
+            } />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

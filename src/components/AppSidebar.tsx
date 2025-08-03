@@ -78,7 +78,7 @@ const navigationItems = [
 const adminItems = [
   {
     title: "Access Control",
-    url: "/admin/access",
+    url: "/roles",
     icon: Shield,
     description: "Role-based permissions"
   }
