@@ -19,6 +19,7 @@ import CSRContributions from "./pages/CSRContributions";
 import AnalyticsReports from "./pages/AnalyticsReports";
 import DataProcessing from "./pages/DataProcessing";
 import RoleManagement from "./pages/RoleManagement";
+import UserManagement from "./pages/UserManagement";
 
 const queryClient = new QueryClient();
 
@@ -89,6 +90,11 @@ const App = () => (
             <Route path="/admin/access" element={
               <ProtectedRoute requiredRoles={['super_admin']}>
                 <Layout><RoleManagement /></Layout>
+              </ProtectedRoute>
+            } />
+            <Route path="/user-management" element={
+              <ProtectedRoute requiredRoles={['super_admin']}>
+                <Layout><UserManagement /></Layout>
               </ProtectedRoute>
             } />
             <Route path="*" element={<NotFound />} />
