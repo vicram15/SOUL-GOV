@@ -47,32 +47,15 @@ export default function RoleManagement() {
     try {
       setLoading(true);
       
-      // Fetch profiles with their roles
-      const { data: profiles, error: profilesError } = await supabase
-        .from('profiles')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (profilesError) throw profilesError;
-
-      // Fetch roles for each user
-      const usersWithRoles = await Promise.all(
-        profiles.map(async (profile) => {
-          const { data: roles, error: rolesError } = await supabase
-            .from('user_roles')
-            .select('role')
-            .eq('user_id', profile.id);
-
-          if (rolesError) throw rolesError;
-
-          return {
-            ...profile,
-            roles: roles.map(r => r.role as UserRole)
-          };
-        })
-      );
-
-      setUsers(usersWithRoles);
+      // TODO: Enable after migration is executed
+      // For now, show placeholder data
+      setUsers([]);
+      
+      toast({
+        title: "Database Setup Required",
+        description: "Please approve the database migration to enable role management",
+        variant: "destructive"
+      });
     } catch (error) {
       console.error('Error fetching users:', error);
       toast({
@@ -90,73 +73,20 @@ export default function RoleManagement() {
   }, []);
 
   const handleAssignRole = async () => {
-    if (!selectedUser) return;
-
-    try {
-      const { error } = await supabase
-        .from('user_roles')
-        .insert({
-          user_id: selectedUser.id,
-          role: selectedRole
-        });
-
-      if (error) throw error;
-
-      // Update profile with state/district if needed
-      if (selectedState || selectedDistrict) {
-        const { error: updateError } = await supabase
-          .from('profiles')
-          .update({
-            state: selectedState || null,
-            district: selectedDistrict || null
-          })
-          .eq('id', selectedUser.id);
-
-        if (updateError) throw updateError;
-      }
-
-      toast({
-        title: "Success",
-        description: `Role ${selectedRole} assigned successfully`
-      });
-
-      fetchUsers();
-      setIsDialogOpen(false);
-      setSelectedUser(null);
-    } catch (error) {
-      console.error('Error assigning role:', error);
-      toast({
-        title: "Error",
-        description: "Failed to assign role",
-        variant: "destructive"
-      });
-    }
+    toast({
+      title: "Database Setup Required",
+      description: "Please approve the database migration to enable role assignment",
+      variant: "destructive"
+    });
+    setIsDialogOpen(false);
   };
 
   const handleRemoveRole = async (userId: string, role: UserRole) => {
-    try {
-      const { error } = await supabase
-        .from('user_roles')
-        .delete()
-        .eq('user_id', userId)
-        .eq('role', role);
-
-      if (error) throw error;
-
-      toast({
-        title: "Success",
-        description: `Role ${role} removed successfully`
-      });
-
-      fetchUsers();
-    } catch (error) {
-      console.error('Error removing role:', error);
-      toast({
-        title: "Error",
-        description: "Failed to remove role",
-        variant: "destructive"
-      });
-    }
+    toast({
+      title: "Database Setup Required",
+      description: "Please approve the database migration to enable role management",
+      variant: "destructive"
+    });
   };
 
   const openAssignDialog = (user: UserWithRoles) => {

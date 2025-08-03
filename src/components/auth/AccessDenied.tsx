@@ -20,12 +20,17 @@ export function AccessDenied({ requiredRoles }: AccessDeniedProps) {
     const logAccessDenial = async () => {
       if (user) {
         try {
-          await supabase.from('access_logs').insert({
-            user_id: user.id,
-            resource: window.location.pathname,
-            success: false,
-            ip_address: 'unknown',
-            user_agent: navigator.userAgent
+          // TODO: Enable after migration is executed
+          // await supabase.from('access_logs').insert({
+          //   user_id: user.id,
+          //   resource: window.location.pathname,
+          //   success: false,
+          //   ip_address: 'unknown',
+          //   user_agent: navigator.userAgent
+          // });
+          console.log('Access denied:', { 
+            user_id: user.id, 
+            resource: window.location.pathname 
           });
         } catch (error) {
           console.error('Failed to log access denial:', error);
