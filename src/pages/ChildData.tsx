@@ -121,6 +121,26 @@ export default function ChildData() {
     setAssignSchoolModalOpen(true);
   };
 
+  const handleTableVerifyEntry = (child: any) => {
+    setSelectedChild(child);
+    setVerifyModalOpen(true);
+  };
+
+  const handleTableEditDetails = (child: any) => {
+    setSelectedChild(child);
+    setEditModalOpen(true);
+  };
+
+  const handleTableViewTimeline = (child: any) => {
+    setSelectedChild(child);
+    setTimelineModalOpen(true);
+  };
+
+  const handleTableAssignSchool = (child: any) => {
+    setSelectedChild(child);
+    setAssignSchoolModalOpen(true);
+  };
+
   return (
     <div className="space-y-6 p-4 md:p-6">
       {/* Header */}
@@ -290,18 +310,42 @@ export default function ChildData() {
                         <TableCell>{getStatusBadge(child.schoolStatus)}</TableCell>
                         <TableCell>{getStatusBadge(child.idStatus)}</TableCell>
                         <TableCell>
-                          <div className="flex gap-2">
-                            <Button size="sm" variant="outline">
-                              <CheckCircle className="w-4 h-4" />
+                          <div className="flex gap-1 sm:gap-2">
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              className="h-8 w-8 sm:h-9 sm:w-9 p-0 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                              aria-label="Verify entry"
+                              onClick={() => handleTableVerifyEntry(child)}
+                            >
+                              <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-success" />
                             </Button>
-                            <Button size="sm" variant="outline">
-                              <Edit className="w-4 h-4" />
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              className="h-8 w-8 sm:h-9 sm:w-9 p-0 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                              aria-label="Edit details"
+                              onClick={() => handleTableEditDetails(child)}
+                            >
+                              <Edit className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
                             </Button>
-                            <Button size="sm" variant="outline">
-                              <Eye className="w-4 h-4" />
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              className="h-8 w-8 sm:h-9 sm:w-9 p-0 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                              aria-label="View timeline"
+                              onClick={() => handleTableViewTimeline(child)}
+                            >
+                              <Eye className="w-3 h-3 sm:w-4 sm:h-4 text-volunteer" />
                             </Button>
-                            <Button size="sm" variant="outline">
-                              <School className="w-4 h-4" />
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              className="h-8 w-8 sm:h-9 sm:w-9 p-0 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                              aria-label="Assign school"
+                              onClick={() => handleTableAssignSchool(child)}
+                            >
+                              <School className="w-3 h-3 sm:w-4 sm:h-4 text-child-care" />
                             </Button>
                           </div>
                         </TableCell>
@@ -347,12 +391,24 @@ export default function ChildData() {
                   </div>
 
                   <div className="flex gap-2">
-                    <Button size="sm" variant="outline" className="flex-1">
-                      <Eye className="w-4 h-4 mr-2" />
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="flex-1 h-9 sm:h-10 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                      aria-label="View child details"
+                      onClick={() => handleTableViewTimeline(child)}
+                    >
+                      <Eye className="w-4 h-4 mr-2 text-primary" />
                       View
                     </Button>
-                    <Button size="sm" variant="outline" className="flex-1">
-                      <Edit className="w-4 h-4 mr-2" />
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="flex-1 h-9 sm:h-10 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                      aria-label="Edit child details"
+                      onClick={() => handleTableEditDetails(child)}
+                    >
+                      <Edit className="w-4 h-4 mr-2 text-volunteer" />
                       Edit
                     </Button>
                   </div>

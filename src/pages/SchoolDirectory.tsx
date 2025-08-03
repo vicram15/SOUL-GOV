@@ -115,6 +115,21 @@ export default function SchoolDirectory() {
     setSchoolDetailsModalOpen(true);
   };
 
+  const handleTableAssignChild = (school: any) => {
+    setSelectedSchool(school);
+    setAssignChildModalOpen(true);
+  };
+
+  const handleTableUpdateSchool = (school: any) => {
+    setSelectedSchool(school);
+    setUpdateSchoolModalOpen(true);
+  };
+
+  const handleTableViewSchoolDetails = (school: any) => {
+    setSelectedSchool(school);
+    setSchoolDetailsModalOpen(true);
+  };
+
   return (
     <div className="space-y-6 p-4 md:p-6">
       {/* Header */}
@@ -279,15 +294,33 @@ export default function SchoolDirectory() {
                     </TableCell>
                     <TableCell className="hidden lg:table-cell">{school.childrenAssigned}</TableCell>
                     <TableCell>
-                      <div className="flex gap-2">
-                        <Button size="sm" variant="outline">
-                          <UserPlus className="w-4 h-4" />
+                      <div className="flex gap-1 sm:gap-2">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          className="h-8 w-8 sm:h-9 sm:w-9 p-0 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                          aria-label="Assign child"
+                          onClick={() => handleTableAssignChild(school)}
+                        >
+                          <UserPlus className="w-3 h-3 sm:w-4 sm:h-4 text-success" />
                         </Button>
-                        <Button size="sm" variant="outline">
-                          <Edit className="w-4 h-4" />
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          className="h-8 w-8 sm:h-9 sm:w-9 p-0 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                          aria-label="Edit school"
+                          onClick={() => handleTableUpdateSchool(school)}
+                        >
+                          <Edit className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
                         </Button>
-                        <Button size="sm" variant="outline">
-                          <Eye className="w-4 h-4" />
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          className="h-8 w-8 sm:h-9 sm:w-9 p-0 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                          aria-label="View school details"
+                          onClick={() => handleTableViewSchoolDetails(school)}
+                        >
+                          <Eye className="w-3 h-3 sm:w-4 sm:h-4 text-volunteer" />
                         </Button>
                       </div>
                     </TableCell>

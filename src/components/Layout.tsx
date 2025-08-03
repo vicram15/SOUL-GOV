@@ -102,10 +102,10 @@ export function Layout({ children }: LayoutProps) {
                       </Avatar>
                       <div className="hidden sm:block text-left">
                         <div className="text-sm font-medium">
-                          {profile?.full_name || 'User'}
+                          {profile?.full_name || ''}
                         </div>
                         <div className="text-xs text-muted-foreground">
-                          {user?.email}
+                          
                         </div>
                         <div className="flex gap-1 mt-1">
                           {profile?.roles.slice(0, 2).map((role) => (

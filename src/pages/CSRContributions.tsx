@@ -136,6 +136,21 @@ export default function CSRContributions() {
     setGenerateReportModalOpen(true);
   };
 
+  const handleTableViewReport = (contribution: any) => {
+    setSelectedContribution(contribution);
+    setViewReportModalOpen(true);
+  };
+
+  const handleTableExportData = (contribution: any) => {
+    setSelectedContribution(contribution);
+    setExportDataModalOpen(true);
+  };
+
+  const handleTableContactContributor = (contribution: any) => {
+    setSelectedContribution(contribution);
+    setContactContributorModalOpen(true);
+  };
+
   return (
     <>
       <div className="space-y-6 p-4 md:p-6">
@@ -294,15 +309,33 @@ export default function CSRContributions() {
                       <TableCell>{getStatusBadge(contribution.status)}</TableCell>
                       <TableCell className="hidden lg:table-cell">{contribution.date}</TableCell>
                       <TableCell>
-                        <div className="flex gap-2">
-                          <Button size="sm" variant="outline">
-                            <Eye className="w-4 h-4" />
+                        <div className="flex gap-1 sm:gap-2">
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            className="h-8 w-8 sm:h-9 sm:w-9 p-0 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                            aria-label="View report"
+                            onClick={() => handleTableViewReport(contribution)}
+                          >
+                            <Eye className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
                           </Button>
-                          <Button size="sm" variant="outline">
-                            <Download className="w-4 h-4" />
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            className="h-8 w-8 sm:h-9 sm:w-9 p-0 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                            aria-label="Download data"
+                            onClick={() => handleTableExportData(contribution)}
+                          >
+                            <Download className="w-3 h-3 sm:w-4 sm:h-4 text-success" />
                           </Button>
-                          <Button size="sm" variant="outline">
-                            <Contact className="w-4 h-4" />
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            className="h-8 w-8 sm:h-9 sm:w-9 p-0 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                            aria-label="Contact contributor"
+                            onClick={() => handleTableContactContributor(contribution)}
+                          >
+                            <Contact className="w-3 h-3 sm:w-4 sm:h-4 text-volunteer" />
                           </Button>
                         </div>
                       </TableCell>

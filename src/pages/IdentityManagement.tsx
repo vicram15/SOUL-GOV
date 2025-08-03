@@ -120,6 +120,21 @@ export default function IdentityManagement() {
     setBulkUpdateModalOpen(true);
   };
 
+  const handleTableMarkEnrolled = (child: any) => {
+    setSelectedChild(child);
+    setEnrollModalOpen(true);
+  };
+
+  const handleTableGenerateForm = (child: any) => {
+    setSelectedChild(child);
+    setGenerateFormModalOpen(true);
+  };
+
+  const handleTableAlertPending = (child: any) => {
+    setSelectedChild(child);
+    setAlertPendingModalOpen(true);
+  };
+
   return (
     <>
       <div className="space-y-6 p-4 md:p-6">
@@ -279,15 +294,33 @@ export default function IdentityManagement() {
                       <TableCell className="hidden sm:table-cell">{getStatusBadge(child.rationCard)}</TableCell>
                       <TableCell className="hidden lg:table-cell">{getStatusBadge(child.birthCertificate)}</TableCell>
                       <TableCell>
-                        <div className="flex gap-2">
-                          <Button size="sm" variant="outline">
-                            <CheckCircle className="w-4 h-4" />
+                        <div className="flex gap-1 sm:gap-2">
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            className="h-8 w-8 sm:h-9 sm:w-9 p-0 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                            aria-label="Mark as enrolled"
+                            onClick={() => handleTableMarkEnrolled(child)}
+                          >
+                            <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-success" />
                           </Button>
-                          <Button size="sm" variant="outline">
-                            <FileText className="w-4 h-4" />
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            className="h-8 w-8 sm:h-9 sm:w-9 p-0 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                            aria-label="Generate form"
+                            onClick={() => handleTableGenerateForm(child)}
+                          >
+                            <FileText className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
                           </Button>
-                          <Button size="sm" variant="outline">
-                            <AlertCircle className="w-4 h-4" />
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            className="h-8 w-8 sm:h-9 sm:w-9 p-0 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                            aria-label="Alert pending"
+                            onClick={() => handleTableAlertPending(child)}
+                          >
+                            <AlertCircle className="w-3 h-3 sm:w-4 sm:h-4 text-destructive" />
                           </Button>
                         </div>
                       </TableCell>

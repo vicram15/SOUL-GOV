@@ -86,6 +86,21 @@ export default function VolunteerManagement() {
     setBulkKycModalOpen(true);
   };
 
+  const handleTableApproveKyc = (volunteer: any) => {
+    setSelectedVolunteer(volunteer);
+    setApproveKycModalOpen(true);
+  };
+
+  const handleTableViewChildren = (volunteer: any) => {
+    setSelectedVolunteer(volunteer);
+    setViewChildrenModalOpen(true);
+  };
+
+  const handleTableSuspendVolunteer = (volunteer: any) => {
+    setSelectedVolunteer(volunteer);
+    setSuspendVolunteerModalOpen(true);
+  };
+
   return (
     <div className="space-y-6 p-4 md:p-6">
       {/* Header */}
@@ -228,15 +243,33 @@ export default function VolunteerManagement() {
                     <TableCell>{getStatusBadge(volunteer.kycStatus)}</TableCell>
                     <TableCell className="hidden sm:table-cell">{volunteer.childrenAdded}</TableCell>
                     <TableCell>
-                      <div className="flex gap-2">
-                        <Button size="sm" variant="outline">
-                          <UserCheck className="w-4 h-4" />
+                      <div className="flex gap-1 sm:gap-2">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          className="h-8 w-8 sm:h-9 sm:w-9 p-0 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                          aria-label="Approve KYC"
+                          onClick={() => handleTableApproveKyc(volunteer)}
+                        >
+                          <UserCheck className="w-3 h-3 sm:w-4 sm:h-4 text-success" />
                         </Button>
-                        <Button size="sm" variant="outline">
-                          <Eye className="w-4 h-4" />
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          className="h-8 w-8 sm:h-9 sm:w-9 p-0 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                          aria-label="View details"
+                          onClick={() => handleTableViewChildren(volunteer)}
+                        >
+                          <Eye className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
                         </Button>
-                        <Button size="sm" variant="outline">
-                          <UserX className="w-4 h-4" />
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          className="h-8 w-8 sm:h-9 sm:w-9 p-0 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-md focus:ring-2 focus:ring-primary/20 touch-manipulation"
+                          aria-label="Suspend volunteer"
+                          onClick={() => handleTableSuspendVolunteer(volunteer)}
+                        >
+                          <UserX className="w-3 h-3 sm:w-4 sm:h-4 text-destructive" />
                         </Button>
                       </div>
                     </TableCell>
