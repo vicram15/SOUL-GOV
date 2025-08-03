@@ -56,11 +56,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const fetchProfile = async (userId: string) => {
     try {
       // TODO: Enable after migration is executed
-      // For now, create a default profile
+      // For now, create a default profile with proper email
+      const userEmail = user?.email || '';
       setProfile({
         id: userId,
-        email: user?.email || '',
-        full_name: user?.user_metadata?.full_name || '',
+        email: userEmail,
+        full_name: user?.user_metadata?.full_name || userEmail.split('@')[0],
         state: undefined,
         district: undefined,
         roles: ['super_admin'] // Default role for testing
@@ -189,6 +190,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const canAccess = (requiredRoles: UserRole[]): boolean => {
     if (!profile || !user) return false;
+    if (requiredRoles.length === 0) return true; // No roles required
     return hasAnyRole(requiredRoles);
   };
 
